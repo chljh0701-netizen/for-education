@@ -34,11 +34,11 @@
 "use strict";
 const C=200,R=135,T=Math.PI*2,$=id=>document.getElementById(id);
 const tasks=[
-{name:"태윤",short:"호",title:"작은 호와 큰 호",prompt:"원 위에 두 점 A, B를 놓아 보세요. 원이 두 부분으로 나뉩니다. 두 부분을 각각 호라고 하며, 짧은 쪽과 긴 쪽을 찾아 표시해 보세요.",points:["A","B"],tools:[["minor","작은 호 AB"],["major","큰 호 AB"]],think:"점 A나 B를 옮기면 두 호의 길이는 어떻게 달라질까요?"},
-{name:"도윤",short:"직선·현",title:"직선과 현",prompt:"원 위에 두 점 A, B를 놓으세요. 두 점을 지나는 직선 ℓ과 두 점을 잇는 선분인 현 AB를 각각 표시해 보세요.",points:["A","B"],tools:[["line","직선 ℓ"],["chord","현 AB"]],think:"직선 ℓ과 현 AB는 끝나는 위치가 어떻게 다른가요?"},
-{name:"지호",short:"부채꼴",title:"부채꼴 OAB",prompt:"두 반지름 OA, OB와 작은 호 AB로 둘러싸인 부분을 찾아 색칠해 보세요.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["minor","호 AB"],["sector","부채꼴 OAB"]],think:"점 A나 B를 옮기면 부채꼴의 넓이는 어떻게 달라질까요?"},
-{name:"상훈",short:"중심각",title:"중심각 AOB",prompt:"두 반지름 OA, OB가 이루는 각을 그려 보세요. 이 각을 호 AB 또는 부채꼴 OAB의 중심각이라고 합니다.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["angle","중심각 ∠AOB"],["minor","호 AB"]],think:"중심각이 커질수록 작은 호 AB의 길이는 어떻게 되나요?"},
-{name:"연재",short:"활꼴·반원",title:"활꼴과 반원",prompt:"원 위에 C를 놓으면 지름의 반대편에 D가 생깁니다. 현 CD와 호 CD로 둘러싸인 부분을 표시해 보세요.",points:["C"],tools:[["diameter","현 CD"],["semicircle","호 CD"],["segment","활꼴"]],think:"CD가 지름일 때, 이 활꼴은 원의 몇 분의 몇인가요?"}
+{name:"서준",short:"호",title:"작은 호와 큰 호",prompt:"원 위에 두 점 A, B를 놓아 보세요. 원이 두 부분으로 나뉩니다. 두 부분을 각각 호라고 하며, 짧은 쪽과 긴 쪽을 찾아 표시해 보세요.",points:["A","B"],tools:[["minor","작은 호 AB"],["major","큰 호 AB"]],think:"점 A나 B를 옮기면 두 호의 길이는 어떻게 달라질까요?"},
+{name:"수빈",short:"직선·현",title:"직선과 현",prompt:"원 위에 두 점 A, B를 놓으세요. 두 점을 지나는 직선 ℓ과 두 점을 잇는 선분인 현 AB를 각각 표시해 보세요.",points:["A","B"],tools:[["line","직선 ℓ"],["chord","현 AB"]],think:"직선 ℓ과 현 AB는 끝나는 위치가 어떻게 다른가요?"},
+{name:"한별",short:"부채꼴",title:"부채꼴 OAB",prompt:"두 반지름 OA, OB와 작은 호 AB로 둘러싸인 부분을 찾아 색칠해 보세요.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["minor","호 AB"],["sector","부채꼴 OAB"]],think:"점 A나 B를 옮기면 부채꼴의 넓이는 어떻게 달라질까요?"},
+{name:"은후",short:"중심각",title:"중심각 AOB",prompt:"두 반지름 OA, OB가 이루는 각을 그려 보세요. 이 각을 호 AB 또는 부채꼴 OAB의 중심각이라고 합니다.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["angle","중심각 ∠AOB"],["minor","호 AB"]],think:"중심각이 커질수록 작은 호 AB의 길이는 어떻게 되나요?"},
+{name:"성하",short:"활꼴·반원",title:"활꼴과 반원",prompt:"원 위에 C를 놓으면 지름의 반대편에 D가 생깁니다. 현 CD와 호 CD로 둘러싸인 부분을 표시해 보세요.",points:["C"],tools:[["diameter","현 CD"],["semicircle","호 CD"],["segment","활꼴"]],think:"CD가 지름일 때, 이 활꼴은 원의 몇 분의 몇인가요?"}
 ];
 const states=tasks.map(()=>({A:null,B:null,C:null,D:null,shown:{},student:{},semiSweep:1}));let current=0,placing="A",drag=null,gesture=null;
 const instructions=[
