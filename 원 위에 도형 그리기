@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>원 위에 도형 그리기</title>
+<style>
+:root{font-family:"Malgun Gothic",system-ui,sans-serif;color:#18332b;background:#f5f8f4}*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #d79042;outline-offset:2px}
+.wrap{max-width:1050px;margin:auto;padding:24px 18px}header{display:flex;align-items:center;justify-content:space-between;gap:15px}h1{margin:3px 0 6px;font-size:clamp(1.7rem,4vw,2.5rem)}.eyebrow{color:#317055;font-weight:800;font-size:.8rem;letter-spacing:.08em}.intro{color:#5c7668;line-height:1.55;margin:0}.badge{background:#e7f2db;border-radius:30px;padding:9px 13px;font-size:.82rem;color:#386343;font-weight:700}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:24px 0 15px}.tab{background:#fff;border:1px solid #bfd0c5;border-radius:14px;padding:10px 3px;min-height:66px;color:#436153}.tab:hover{border-color:#2e765a}.tab[aria-selected=true]{background:#286c55;color:white;border-color:#286c55;box-shadow:0 5px 14px #286c5533}.tab strong,.tab span{display:block}.tab span{font-size:.75rem;margin-top:3px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.card{background:white;border:1px solid #dae5dd;border-radius:21px;box-shadow:0 7px 24px #143b280b}.board-card{padding:16px}.board-head{display:flex;justify-content:space-between;align-items:center;padding:2px 5px}.board-head h2{font-size:1.1rem;margin:0}.board-head span{color:#6b8274;font-size:.76rem}svg{display:block;width:100%;aspect-ratio:1;max-height:520px;margin:auto;touch-action:none;cursor:crosshair}.hint{background:#eff6eb;border-radius:11px;padding:10px 12px;font-size:.86rem;color:#38614c;margin:0 3px}
+.panel{padding:22px}.step{color:#287054;font-weight:800;font-size:.78rem;letter-spacing:.05em}.panel h2{margin:6px 0 9px;font-size:1.42rem}.prompt{line-height:1.7;margin:0 0 16px}.group{border-top:1px solid #e5ece6;padding-top:16px;margin-top:15px}.group h3{color:#507061;font-size:.88rem;margin:0 0 10px}.buttons,.actions{display:flex;flex-wrap:wrap;gap:7px}.tool,.secondary{border:1px solid #bad0c1;border-radius:10px;padding:9px 11px;background:white;color:#28503b;font-weight:700}.tool:hover,.secondary:hover{background:#ecf6ec}.tool.active{background:#286c55;color:white;border-color:#286c55}.tool:disabled{opacity:.45;cursor:not-allowed}.actions{margin-top:18px}.secondary{background:#eef4ee;border-color:#d8e4d9}.status{min-height:2.6em;color:#34704f;font-size:.87rem;line-height:1.5}.think{background:#f0f5ed;border-radius:13px;padding:14px;line-height:1.6;font-size:.88rem}.think strong{color:#216546}footer{text-align:center;color:#6e8375;font-size:.78rem;margin:18px 0}
+.circle{fill:white;stroke:#778b7b;stroke-width:2.4}.center{fill:#244b39}.line{fill:none;stroke:#347aa0;stroke-width:3.3;stroke-linecap:round}.arc{fill:none;stroke:#de8150;stroke-width:5;stroke-linecap:round}.student-arc{fill:none;stroke:#168f92;stroke-width:7;stroke-linecap:round}.trail{fill:none;stroke:#168f92;stroke-width:7;stroke-linecap:round;opacity:.7}.region{fill:#f3bd6b77;stroke:#d17e3f;stroke-width:2}.angle{fill:none;stroke:#9653ac;stroke-width:3}.dot{fill:#203e30;stroke:white;stroke-width:2;cursor:grab}.label{font:700 20px "Malgun Gothic",sans-serif;fill:#22392e;stroke:white;stroke-width:4;paint-order:stroke}.angle-label{font:700 20px "Malgun Gothic",sans-serif;fill:#9653ac;stroke:white;stroke-width:4;paint-order:stroke}
+.drawn{stroke:#168f92;stroke-width:7;fill:none;stroke-linecap:round}.drawn-fill{fill:#168f9255;stroke:#168f92;stroke-width:2}.answer-mark{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:9 5}.answer-fill{fill-opacity:.35;stroke-width:3}.answer-minor{stroke:#e87526}.answer-major{stroke:#865ac1}.answer-line{stroke:#2677cb}.answer-chord{stroke:#d14d65}.answer-radiusA{stroke:#286fc2}.answer-radiusB{stroke:#8756b9}.answer-sector{stroke:#d89713;fill:#f6c955}.answer-angle{stroke:#d1588f}.answer-diameter{stroke:#2876bc}.answer-semicircle{stroke:#d96e2d}.answer-segment{stroke:#9b59b6;fill:#ac7ac9}.dot{fill:#203e30;stroke:white;stroke-width:2;cursor:grab}
+.student-minor{stroke:#e87526}.student-major{stroke:#865ac1}.student-line{stroke:#2677cb}.student-chord{stroke:#d14d65}.student-radiusA{stroke:#286fc2}.student-radiusB{stroke:#8756b9}.student-angle{stroke:#d1588f}.student-diameter{stroke:#2876bc}.student-semicircle{stroke:#d96e2d}.student-sector{stroke:#d89713;fill:#f6c95588}.student-segment{stroke:#9b59b6;fill:#ac7ac988}
+.answer{margin-top:18px;border-top:1px solid #e5ece6;padding-top:15px}.answer summary{font-weight:800;color:#315d48;cursor:pointer}.answer p{font-size:.84rem;color:#597568;line-height:1.5}.student-note{color:#16777a;font-weight:700;line-height:1.6}.key{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+@media(max-width:740px){.grid{grid-template-columns:1fr}.badge{display:none}.tabs{gap:5px}.tab{min-height:60px}.tab strong{font-size:.88rem}.tab span{font-size:.67rem}.panel{padding:18px}.board-card{padding:10px}}
+</style>
+</head>
+<body><div class="wrap">
+<header><div><div class="eyebrow">직접 그려 보는 원의 도형</div><h1>원 위에 도형 그리기</h1><p class="intro">학생을 선택하고 원 위에 점을 놓아 도형을 완성해 보세요.</p></div><div class="badge">인터넷 없이 사용 가능</div></header>
+<nav id="tabs" class="tabs" aria-label="학생별 활동"></nav>
+<main class="grid">
+<section class="card board-card"><div class="board-head"><h2 id="boardTitle"></h2><span id="boardTip">점을 끌어서 옮길 수 있어요</span></div><svg id="board" viewBox="0 0 400 400" role="img" aria-label="중심 O가 있는 원"></svg><p class="hint" id="hint"></p></section>
+<section class="card panel"><span class="step" id="step"></span><h2 id="title"></h2><p class="prompt" id="prompt"></p>
+<div class="group"><h3>① 원 위에 점 놓기</h3><div class="buttons" id="points"></div></div>
+<div class="group"><h3 id="shapeHeading">② 도형 표시하기</h3><div class="buttons" id="shapes"></div></div>
+<div class="actions"><button class="secondary" id="example">예시 배치</button><button class="secondary" id="reset">이 활동 지우기</button></div>
+<p class="status" id="status" role="status"></p><div class="think"><strong>생각해 보기</strong><br><span id="think"></span></div>
+<details id="answer" class="answer"><summary>정답 확인</summary><p>먼저 직접 그린 다음 확인해 보세요. 각 정답은 서로 다른 색으로 표시됩니다.</p><div class="buttons" id="answerShapes"></div></details></section>
+</main><footer>점은 원 안쪽을 눌러도 원 둘레에 놓입니다. 정답 확인 단추를 다시 누르면 해당 정답 표시가 사라집니다.</footer>
+</div>
+<script>
+(()=>{
+"use strict";
+const C=200,R=135,T=Math.PI*2,$=id=>document.getElementById(id);
+const tasks=[
+{name:"태윤",short:"호",title:"작은 호와 큰 호",prompt:"원 위에 두 점 A, B를 놓아 보세요. 원이 두 부분으로 나뉩니다. 두 부분을 각각 호라고 하며, 짧은 쪽과 긴 쪽을 찾아 표시해 보세요.",points:["A","B"],tools:[["minor","작은 호 AB"],["major","큰 호 AB"]],think:"점 A나 B를 옮기면 두 호의 길이는 어떻게 달라질까요?"},
+{name:"도윤",short:"직선·현",title:"직선과 현",prompt:"원 위에 두 점 A, B를 놓으세요. 두 점을 지나는 직선 ℓ과 두 점을 잇는 선분인 현 AB를 각각 표시해 보세요.",points:["A","B"],tools:[["line","직선 ℓ"],["chord","현 AB"]],think:"직선 ℓ과 현 AB는 끝나는 위치가 어떻게 다른가요?"},
+{name:"지호",short:"부채꼴",title:"부채꼴 OAB",prompt:"두 반지름 OA, OB와 작은 호 AB로 둘러싸인 부분을 찾아 색칠해 보세요.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["minor","호 AB"],["sector","부채꼴 OAB"]],think:"점 A나 B를 옮기면 부채꼴의 넓이는 어떻게 달라질까요?"},
+{name:"상훈",short:"중심각",title:"중심각 AOB",prompt:"두 반지름 OA, OB가 이루는 각을 그려 보세요. 이 각을 호 AB 또는 부채꼴 OAB의 중심각이라고 합니다.",points:["A","B"],tools:[["radiusA","반지름 OA"],["radiusB","반지름 OB"],["angle","중심각 ∠AOB"],["minor","호 AB"]],think:"중심각이 커질수록 작은 호 AB의 길이는 어떻게 되나요?"},
+{name:"연재",short:"활꼴·반원",title:"활꼴과 반원",prompt:"원 위에 C를 놓으면 지름의 반대편에 D가 생깁니다. 현 CD와 호 CD로 둘러싸인 부분을 표시해 보세요.",points:["C"],tools:[["diameter","현 CD"],["semicircle","호 CD"],["segment","활꼴"]],think:"CD가 지름일 때, 이 활꼴은 원의 몇 분의 몇인가요?"}
+];
+const states=tasks.map(()=>({A:null,B:null,C:null,D:null,shown:{},student:{},semiSweep:1}));let current=0,placing="A",drag=null,gesture=null;
+const instructions=[
+"A 또는 B에서 다른 점까지 원둘레를 따라 드래그하세요. 두 방향을 모두 그려 보세요.",
+"A에서 B까지 드래그하면 현이 됩니다. A에서 시작해 B를 지나 원 밖까지 드래그하면 직선이 됩니다.",
+"중심 O에서 A와 B까지 각각 드래그하세요. A에서 B까지 원둘레를 따라 드래그한 뒤, 부채꼴 안을 탭해 색칠하세요.",
+"중심 O에서 A와 B까지 각각 드래그하세요. A에서 B까지 원둘레를 따라 드래그하고, 중심 O 부근을 탭해 중심각을 그리세요.",
+"C에서 D까지 중심을 가로질러 드래그해 현을 그리세요. C에서 D까지 원둘레를 따라 드래그한 뒤, 반원 안을 탭해 색칠하세요."
+];
+const answerColors={minor:"#e87526",major:"#865ac1",line:"#2677cb",chord:"#d14d65",radiusA:"#286fc2",radiusB:"#8756b9",sector:"#d89713",angle:"#d1588f",diameter:"#2876bc",semicircle:"#d96e2d",segment:"#9b59b6"};
+const polar=a=>({x:C+R*Math.cos(a),y:C+R*Math.sin(a)}),f=n=>Number(n.toFixed(2)),xy=p=>f(p.x)+" "+f(p.y),angle=p=>Math.atan2(p.y-C,p.x-C);
+function diff(a,b){let d=(b-a+3*Math.PI)%T-Math.PI;return d===-Math.PI?Math.PI:d}
+function arc(p,q,large=false){let d=diff(angle(p),angle(q));if(large)d+=d>0?-T:T;return {path:"M "+xy(p)+" A "+R+" "+R+" 0 "+(Math.abs(d)>Math.PI?1:0)+" "+(d>0?1:0)+" "+xy(q),d}}
+const path=(d,cls)=>'<path d="'+d+'" class="'+cls+'"/>',line=(p,q)=>'<line x1="'+f(p.x)+'" y1="'+f(p.y)+'" x2="'+f(q.x)+'" y2="'+f(q.y)+'" class="line"/>';
+const ready=s=>tasks[current].points.every(k=>s[k]);function status(t){$("status").textContent=t}
+function board(){
+const s=states[current],a=s.A,b=s.B,c=s.C,d=s.D,h=s.shown,u=s.student;let out='<circle cx="200" cy="200" r="135" class="circle"/>';
+const mark=(d,k,fill=false)=>path(d,"answer-"+k+" "+(fill?"answer-fill":"answer-mark"));
+const seg=(p,q,cls)=>'<line x1="'+f(p.x)+'" y1="'+f(p.y)+'" x2="'+f(q.x)+'" y2="'+f(q.y)+'" class="'+cls+'"/>';
+if(a&&b){const small=arc(a,b),big=arc(a,b,true),sector="M 200 200 L "+xy(a)+small.path.slice(small.path.indexOf(" A "))+" Z";
+if(u.sector)out+=path(sector,"drawn-fill student-sector");if(h.sector)out+=mark(sector,"sector",true);
+let dx=b.x-a.x,dy=b.y-a.y,n=Math.hypot(dx,dy)||1,v={x:dx/n,y:dy/n},left={x:a.x-350*v.x,y:a.y-350*v.y},right={x:b.x+350*v.x,y:b.y+350*v.y};
+if(u.line)out+=seg(left,right,"drawn student-line");if(h.line)out+=seg(left,right,"answer-mark answer-line");
+if(u.chord)out+=seg(a,b,"drawn student-chord");if(h.chord)out+=seg(a,b,"answer-mark answer-chord");
+if(u.radiusA)out+=seg({x:C,y:C},a,"drawn student-radiusA");if(h.radiusA)out+=seg({x:C,y:C},a,"answer-mark answer-radiusA");
+if(u.radiusB)out+=seg({x:C,y:C},b,"drawn student-radiusB");if(h.radiusB)out+=seg({x:C,y:C},b,"answer-mark answer-radiusB");
+if(u.minor)out+=path(small.path,"student-arc student-minor");if(h.minor)out+=mark(small.path,"minor");
+if(u.major)out+=path(big.path,"student-arc student-major");if(h.major)out+=mark(big.path,"major");
+if(u.angle||h.angle){const r=42,p={x:C+r*Math.cos(angle(a)),y:C+r*Math.sin(angle(a))},q={x:C+r*Math.cos(angle(b)),y:C+r*Math.sin(angle(b))},anglePath="M "+xy(p)+" A "+r+" "+r+" 0 0 "+(small.d>0?1:0)+" "+xy(q);if(u.angle)out+=path(anglePath,"drawn student-angle");if(h.angle)out+=mark(anglePath,"angle");let m=angle(a)+small.d/2;out+='<text x="'+f(C+65*Math.cos(m))+'" y="'+f(C+65*Math.sin(m))+'" text-anchor="middle" dominant-baseline="middle" class="angle-label">∠</text>'}
+}
+if(c&&d){const half="M "+xy(c)+" A "+R+" "+R+" 0 0 "+s.semiSweep+" "+xy(d),area=half+" L "+xy(c)+" Z";
+if(u.segment)out+=path(area,"drawn-fill student-segment");if(h.segment)out+=mark(area,"segment",true);
+if(u.diameter)out+=seg(c,d,"drawn student-diameter");if(h.diameter)out+=seg(c,d,"answer-mark answer-diameter");
+if(u.semicircle)out+=path(half,"student-arc student-semicircle");if(h.semicircle)out+=mark(half,"semicircle")}
+if(gesture&&gesture.samples.length>1)out+='<polyline points="'+gesture.samples.map(p=>f(p.x)+","+f(p.y)).join(" ")+'" class="trail"/>';
+out+='<circle cx="200" cy="200" r="4.5" class="center"/><text x="210" y="218" class="label">O</text>';
+for(const k of ["A","B","C","D"])if(s[k]){const p=s[k],ux=(p.x-C)/R,uy=(p.y-C)/R;out+='<circle cx="'+f(p.x)+'" cy="'+f(p.y)+'" r="12" fill="transparent" data-point="'+k+'"/><circle cx="'+f(p.x)+'" cy="'+f(p.y)+'" r="5.5" class="dot" data-point="'+k+'"/><text x="'+f(p.x+ux*18)+'" y="'+f(p.y+uy*18+6)+'" text-anchor="middle" class="label" pointer-events="none">'+k+"</text>"}
+$("board").innerHTML=out;$("board").setAttribute("aria-label","중심 O가 있는 원. 현재 놓인 점: "+(["A","B","C","D"].filter(k=>s[k]).join(", ")||"없음"))
+}
+function controls(){const t=tasks[current],s=states[current];$("step").textContent="활동 "+(current+1)+" / 5 · "+t.name;$("title").textContent=t.title;$("boardTitle").textContent=t.name+"의 원";$("boardTip").textContent=ready(s)?"손으로 도형을 그려요":"원 위에 점을 놓아요";$("prompt").textContent=t.prompt;$("think").textContent=t.think;$("hint").textContent=placing?"점 "+placing+"의 위치를 정하려면 원을 누르세요.":"점을 놓았습니다. 아래 동작 안내를 따라 그려 보세요.";
+$("points").innerHTML=t.points.map(k=>'<button class="tool '+(placing===k?"active":"")+'" data-place="'+k+'" aria-pressed="'+(placing===k)+'">점 '+k+" 놓기</button>").join("");
+$("shapeHeading").textContent="② 손으로 그려 보기";
+$("shapes").innerHTML='<span class="student-note">'+instructions[current]+"</span>";
+$("answerShapes").innerHTML=t.tools.map(([k,label])=>'<button class="tool '+(s.shown[k]?"active":"")+'" data-shape="'+k+'" aria-pressed="'+!!s.shown[k]+'" '+(ready(s)?"":"disabled")+'><span class="key" style="background:'+answerColors[k]+'"></span>'+label+"</button>").join("");
+board()}
+function tabs(){$("tabs").innerHTML=tasks.map((t,i)=>'<button class="tab" data-tab="'+i+'" aria-selected="'+(current===i)+'"><strong>'+t.name+"</strong><span>"+t.short+"</span></button>").join("")}
+function select(i){current=i;drag=null;gesture=null;placing=tasks[i].points.find(k=>!states[i][k])||null;$("answer").open=false;tabs();controls();status(ready(states[i])?instructions[i]:"먼저 원 위에 점을 놓아 보세요.")}
+function eventPoint(e){let p=$("board").createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform($("board").getScreenCTM().inverse())}
+function eventAngle(e){let p=eventPoint(e);return Math.atan2(p.y-C,p.x-C)}
+function distance(p,q){return Math.hypot(p.x-q.x,p.y-q.y)}
+function move(k,a){let s=states[current];s[k]=polar(a);if(current===4){if(k==="C")s.D=polar(a+Math.PI);else s.C=polar(a+Math.PI)}board()}
+function inSector(p,s){let da=diff(angle(s.A),angle(s.B)),dp=diff(angle(s.A),Math.atan2(p.y-C,p.x-C));return Math.hypot(p.x-C,p.y-C)<R-14&&Math.sign(da)===Math.sign(dp)&&Math.abs(dp)<Math.abs(da)}
+function inHalf(p,s){let d=(Math.atan2(p.y-C,p.x-C)-angle(s.C)+T)%T;return Math.hypot(p.x-C,p.y-C)<R-14&&(s.semiSweep===0?d>Math.PI:d<Math.PI)}
+function straightness(g,end){const a=g.origin,b=end,dx=b.x-a.x,dy=b.y-a.y,n=Math.hypot(dx,dy)||1;return Math.max(...g.samples.map(p=>Math.abs((p.x-a.x)*dy-(p.y-a.y)*dx)/n))}
+function followsRim(g){return g.samples.length>2&&g.samples.slice(1,-1).every(p=>Math.hypot(p.x-C,p.y-C)>R-35)}
+function recordGesture(e){if(!gesture)return;const p=eventPoint(e),a=Math.atan2(p.y-C,p.x-C);gesture.travel=Math.max(-T+.03,Math.min(T-.03,gesture.travel+diff(gesture.previous,a)));gesture.previous=a;gesture.current=p;gesture.samples.push({x:p.x,y:p.y});board()}
+function finishGesture(e){if(!gesture)return;recordGesture(e);const g=gesture,s=states[current],p=g.current,other=g.start==="A"?"B":g.start==="B"?"A":g.start==="C"?"D":"C",target=s[other],near=target&&distance(p,target)<26;let kind=null;
+if(g.start==="O"){if(current===3&&distance(p,{x:C,y:C})<17)kind="angle";else if(s.A&&distance(p,s.A)<27)kind="radiusA";else if(s.B&&distance(p,s.B)<27)kind="radiusB"}
+else if(near&&Math.abs(g.travel)>.16){const direct=straightness(g,p)<20,rim=followsRim(g);
+if(current===0&&rim){const m=diff(angle(s[g.start]),angle(target)),long=m+(m>0?-T:T);kind=Math.abs(g.travel-m)<Math.abs(g.travel-long)?"minor":"major"}
+if(current===1)kind=direct?"chord":null;
+if((current===2||current===3)&&rim)kind="minor";
+if(current===4){kind=direct?"diameter":rim?"semicircle":null;if(kind==="semicircle")s.semiSweep=(g.start==="C"?(g.travel>0?1:0):(g.travel<0?1:0))}}
+if(current===1&&g.start!=="O"&&!near){const a=s[g.start],b=target,dx=b.x-a.x,dy=b.y-a.y,n=dx*dx+dy*dy,t=((p.x-a.x)*dx+(p.y-a.y)*dy)/n,off=Math.abs((p.x-a.x)*dy-(p.y-a.y)*dx)/Math.sqrt(n);if(t>1.14&&off<25&&straightness(g,p)<25)kind="line"}
+gesture=null;if(kind){s.student[kind]=true;status("직접 그린 도형: "+(tasks[current].tools.find(x=>x[0]===kind)||[])[1]+". 아래에서 정답을 확인할 수 있어요.")}else status("동작을 완성하지 못했어요. 안내를 보고 다시 시도해 보세요.");board()}
+$("board").addEventListener("pointerdown",e=>{const s=states[current],k=e.target.getAttribute("data-point"),p=eventPoint(e);if(k&&ready(s)&&!placing){gesture={start:k,origin:s[k],current:p,samples:[s[k]],previous:angle(s[k]),travel:0};$("board").setPointerCapture(e.pointerId);return}
+if(k){drag=k;$("board").setPointerCapture(e.pointerId);return}
+if(placing){const old=placing;move(old,eventAngle(e));placing=tasks[current].points.find(k=>!states[current][k])||null;controls();status(placing?"점 "+old+"을 놓았습니다. 이제 점 "+placing+"을 놓으세요.":instructions[current]);return}
+if(!ready(s))return;
+if((current===2||current===3)&&distance(p,{x:C,y:C})<20){gesture={start:"O",origin:{x:C,y:C},current:p,samples:[{x:C,y:C}],previous:eventAngle(e),travel:0};$("board").setPointerCapture(e.pointerId);return}
+if(current===2&&inSector(p,s)){s.student.sector=!s.student.sector;board();status("부채꼴을 "+(s.student.sector?"색칠했습니다.":"지웠습니다."));return}
+if(current===3&&distance(p,{x:C,y:C})<32){s.student.angle=!s.student.angle;board();status("중심각을 "+(s.student.angle?"표시했습니다.":"지웠습니다."));return}
+if(current===4&&inHalf(p,s)){s.student.segment=!s.student.segment;board();status("활꼴을 "+(s.student.segment?"색칠했습니다.":"지웠습니다."))}});
+$("board").addEventListener("pointermove",e=>{if(gesture)recordGesture(e);else if(drag)move(drag,eventAngle(e))});
+$("board").addEventListener("pointerup",e=>{if(gesture)finishGesture(e);drag=null});
+$("board").addEventListener("pointercancel",()=>{gesture=null;drag=null;board()});
+$("tabs").addEventListener("click",e=>{let b=e.target.closest("[data-tab]");if(b)select(Number(b.dataset.tab))});
+$("points").addEventListener("click",e=>{let b=e.target.closest("[data-place]");if(b){placing=b.dataset.place;controls();status("원 위에서 점 "+placing+"의 위치를 눌러 주세요.")}});
+$("answerShapes").addEventListener("click",e=>{let b=e.target.closest("[data-shape]");if(!b||b.disabled)return;let s=states[current];s.shown[b.dataset.shape]=!s.shown[b.dataset.shape];let shown=s.shown[b.dataset.shape],label=b.textContent;controls();status(label+(shown?" 정답 예시를 표시했습니다.":" 정답 예시를 지웠습니다."))});
+$("example").addEventListener("click",()=>{let s=states[current];if(current===4){s.C=polar(-2.6);s.D=polar(-2.6+Math.PI)}else{s.A=polar(-2.5);s.B=polar(-.55)}s.student={};s.shown={};placing=null;controls();status("예시 점을 놓았습니다. 손동작 안내에 따라 도형을 그려 보세요.")});
+$("reset").addEventListener("click",()=>{states[current]={A:null,B:null,C:null,D:null,shown:{},student:{},semiSweep:1};placing=tasks[current].points[0];gesture=null;controls();status("이 활동을 지웠습니다. 다시 점을 놓아 보세요.")});
+select(0);
+})();
+</script></body></html>
